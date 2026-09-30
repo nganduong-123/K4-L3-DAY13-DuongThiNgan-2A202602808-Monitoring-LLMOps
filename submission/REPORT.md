@@ -36,8 +36,8 @@ Giữ đúng ba output text và năm ảnh dưới đây. Không tách thêm ả
 | `pytest` | Chưa chạy trước khi sửa TODO | 22 passed | Python 3.11 |
 | Số traces hợp lệ | 0 | 47 trace gốc / 141 observations | Mỗi trace có agent, retrieval, generation |
 | Số PII leak | Có nguy cơ do scrubber chưa đăng ký | 0 | Validator độc lập xác nhận |
-| Latency P50 / P95 / P99 | Chưa có dữ liệu | 2655 / 2768 / 2768 ms | Cửa sổ dashboard sau workload CP3 chính thức |
-| TTFT P95 | Chưa có dữ liệu | 65 ms | Fake LLM; thấp hơn nhiều so với độ trễ retrieval |
+| Latency P50 / P95 / P99 | Chưa có dữ liệu | 156 / 2671 / 2671 ms | Cửa sổ dashboard 60 phút vẫn chứa workload CP3 chính thức và các request phục hồi |
+| TTFT P95 | Chưa có dữ liệu | 53 ms | Fake LLM; thấp hơn nhiều so với độ trễ retrieval |
 | Retrieval success rate | Chưa có dữ liệu | 100% | Challenge làm retrieval chậm nhưng không làm tool fail |
 
 ## 4. Logging và PII
@@ -68,7 +68,7 @@ Giữ đúng ba output text và năm ảnh dưới đây. Không tách thêm ả
 
 - **Challenge ID:** `day13-k4-l3b-monitoring-llmops-v1`.
 - **Khoảng thời gian:** 2026-09-30 11:23–11:24 (Asia/Ho_Chi_Minh).
-- **Triệu chứng từ metrics:** latency P50/P95/P99 là 2655/2768/2768 ms; error rate vẫn 0% và retrieval success 100%.
+- **Triệu chứng từ metrics:** latency P50/P95/P99 là 156/2671/2671 ms trong cửa sổ gồm cả incident và request phục hồi; error rate vẫn 0% và retrieval success 100%.
 - **Log line:** `response_sent`, `correlation_id=req-dbd2aee3`, `latency_ms=2671`, `tool_name=retrieval`, `tool_success=true`.
 - **Trace:** `a09b010ee64003227900b922c6bd2b07`; root `lab-agent-run` khoảng 2.68 s, retrieval span 2.50 s, generation span khoảng 0.15 s.
 - **Root cause:** challenge bật `rag_slow`, độ trễ nằm ở retrieval; generation, model và tool result không lỗi.
