@@ -1,5 +1,7 @@
 # Báo cáo cá nhân — K4-L3B Day 13 Monitoring & LLMOps
 
+> Mỗi học viên hoàn thiện một file duy nhất này. Chỉ cần 3 output text và 5 ảnh runtime; dùng đường dẫn tương đối, ví dụ `evidence/03-incident-trace.png`.
+
 ## 1. Thông tin học viên
 
 - **Họ và tên:** Dương Thị Ngân
@@ -12,22 +14,18 @@
 
 ## 2. Evidence index
 
+Giữ đúng ba output text và năm ảnh dưới đây. Không tách thêm ảnh; nếu cần giải thích, ghi bằng chữ trong các mục sau.
+
 | Evidence | Đường dẫn |
 |---|---|
-| Pytest cuối | `evidence/01-pytest.png` |
-| Log validator | `evidence/02-log-validator.png` |
-| Dashboard validator | `evidence/03-dashboard-validator.png` |
-| Structured log | `evidence/04-structured-log.png` |
-| PII redaction | `evidence/05-pii-redaction.png` |
-| Trace list | `evidence/06-trace-list.png` |
-| Trace waterfall | `evidence/07-trace-waterfall.png` |
-| Trace metadata | `evidence/08-trace-metadata.png` |
-| Prompt versions | `evidence/09-prompt-versions.png` |
-| Promote và rollback prompt | `evidence/10a-prompt-promoted.jpg`, `evidence/10b-prompt-rollback.jpg` |
-| Dashboard runtime | `evidence/11-dashboard-overview.png` |
-| Official CP3 incident metric | `evidence/12-incident-metric.png` |
-| Official CP3 incident log | `evidence/13-incident-log.png` |
-| Official CP3 incident trace | `evidence/14-incident-trace.png` |
+| Pytest cuối | `evidence/pytest.txt` |
+| Log validator | `evidence/log-validator.txt` |
+| Dashboard validator | `evidence/dashboard-validator.txt` |
+| Structured log + incident log | `evidence/01-incident-log.png` |
+| Trace list | `evidence/02-trace-list.png` |
+| Trace waterfall + metadata + incident trace | `evidence/03-incident-trace.png` |
+| Prompt versions + promote/rollback | `evidence/04-prompt-versioning.png` |
+| Dashboard + incident metric | `evidence/05-dashboard-incident.png` |
 
 ## 3. Kết quả kỹ thuật
 
@@ -36,7 +34,7 @@
 | `validate_logs.py` | 30/100 theo trạng thái starter có TODO | 100/100 | Đủ schema, enrichment, correlation ID, không PII thô |
 | `validate_dashboard.py` | 6/6 contract | 6/6 | Dashboard runtime đọc trực tiếp `data/logs.jsonl` |
 | `pytest` | Chưa chạy trước khi sửa TODO | 22 passed | Python 3.11 |
-| Số traces hợp lệ | 0 | 37 trace gốc / 111 observations | Mỗi trace có agent, retrieval, generation |
+| Số traces hợp lệ | 0 | 47 trace gốc / 141 observations | Mỗi trace có agent, retrieval, generation |
 | Số PII leak | Có nguy cơ do scrubber chưa đăng ký | 0 | Validator độc lập xác nhận |
 | Latency P50 / P95 / P99 | Chưa có dữ liệu | 2655 / 2768 / 2768 ms | Cửa sổ dashboard sau workload CP3 chính thức |
 | TTFT P95 | Chưa có dữ liệu | 65 ms | Fake LLM; thấp hơn nhiều so với độ trễ retrieval |
@@ -56,7 +54,7 @@
 - Log và trace nối bằng `metadata.correlation_id`. Ví dụ candidate trace có `correlation_id=req-ca8d1da2`.
 - Prompt name: `day13-chat`.
 - Version 1: labels `baseline`, `production`; version 2: label `candidate`.
-- Trace version 1: `98181e45ab8e66a4f57ac05fa2cb777e`; trace version 2: `98d61bc9e906d98faecc506c2192daa0`.
+- Trace version 1: `98181e45ab8e66a4f57ac05fa2cb777e`; trace candidate version 2: `98d61bc9e906d98faecc506c2192daa0`; trace production version 2: `20f056d7871f60340f836f74fa22d733`.
 - Đã promote `production` sang version 2, chạy request kiểm tra, sau đó rollback `production` về version 1. Trạng thái cuối: v1=`baseline+production`, v2=`candidate`.
 
 ## 6. Dashboard, SLO và alerts
@@ -84,14 +82,15 @@
 - Luồng điều tra: Metrics khoanh vùng triệu chứng/thời gian → Logs chọn đúng request bằng correlation ID → Traces chỉ ra span retrieval chậm → xác nhận root cause.
 - Prompt labels giúp đổi version không cần deploy code; token/cost cho biết prompt có làm chi phí tăng; SLO/alert giúp phát hiện tác động; rollback đưa production về phiên bản ổn định.
 - Điều học được: observability chỉ hữu ích khi metrics, logs và traces dùng chung metadata và evidence có thể truy ngược tới cùng một request.
-- File `config/challenge.json` chính thức đã được dùng để chạy CP3 và vẫn được ignore, không commit/push theo quy định.
+- File `config/challenge.json` chính thức lấy nguyên vẹn từ starter K4-L3B đã được dùng để chạy CP3 và không bị tự ý sửa/thay thế.
 
 ## 9. Checklist trước khi nộp
 
-- [x] Tests và validators chạy thành công.
-- [x] Evidence CP0–CP3 chính thức mở được bằng đường dẫn tương đối.
-- [x] Trace/prompt evidence thuộc project Langfuse cá nhân và không chụp trang API Keys.
-- [x] Repository chạy lại được; `.env`, `.venv`, log runtime và challenge file được ignore.
-- [x] Không commit secret, API key hoặc PII thô.
-- [x] Đã thay practice evidence bằng challenge chính thức của K4-L3B.
-- [ ] Ghi URL repo và final commit SHA lên VLearn sau khi push.
+- [x] Kết quả và evidence thuộc commit SHA cuối.
+- [x] Tất cả ảnh/output mở được bằng đường dẫn tương đối.
+- [x] Có đúng 3 file text và 5 ảnh runtime theo hướng dẫn.
+- [x] Incident evidence nối đúng metric → log → trace.
+- [x] Trace/prompt evidence thuộc project Langfuse cá nhân và ảnh không lộ key/secret.
+- [x] Repository chạy lại được theo README.
+- [x] Không có secret, API key, PII thô hoặc evidence của người khác/lớp khác.
+- [ ] URL repo và commit SHA cuối đã được nộp trên LMS/Codelabs.
