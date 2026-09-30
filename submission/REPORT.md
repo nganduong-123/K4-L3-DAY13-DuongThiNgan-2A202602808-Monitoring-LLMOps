@@ -1,6 +1,6 @@
 # Báo cáo cá nhân — K4-L3B Day 13 Monitoring & LLMOps
 
-> Mỗi học viên hoàn thiện một file duy nhất này. Chỉ cần 3 output text và 5 ảnh runtime; dùng đường dẫn tương đối, ví dụ `evidence/03-incident-trace.png`.
+> Mỗi học viên hoàn thiện một file duy nhất này. Bộ evidence giữ cả checklist `01–14` đang hiển thị trên VLearn và bộ 5 ảnh tổng hợp trong starter mới; mọi đường dẫn đều là đường dẫn tương đối.
 
 ## 1. Thông tin học viên
 
@@ -14,7 +14,7 @@
 
 ## 2. Evidence index
 
-Giữ đúng ba output text và năm ảnh dưới đây. Không tách thêm ảnh; nếu cần giải thích, ghi bằng chữ trong các mục sau.
+Ba output text và năm ảnh tổng hợp theo starter mới:
 
 | Evidence | Đường dẫn |
 |---|---|
@@ -26,6 +26,26 @@ Giữ đúng ba output text và năm ảnh dưới đây. Không tách thêm ả
 | Trace waterfall + metadata + incident trace | `evidence/03-incident-trace.png` |
 | Prompt versions + promote/rollback | `evidence/04-prompt-versioning.png` |
 | Dashboard + incident metric | `evidence/05-dashboard-incident.png` |
+
+Checklist evidence `01–14` theo trang CP4 trên VLearn:
+
+| # | Đường dẫn | Nội dung chính |
+|---:|---|---|
+| 01 | `evidence/01-pytest.png` | Commit code và pytest pass |
+| 02 | `evidence/02-log-validator.png` | Log validator 100/100 |
+| 03 | `evidence/03-dashboard-validator.png` | Dashboard validator 6/6 |
+| 04 | `evidence/04-structured-log.png` | Request/response JSON cùng `correlation_id=req-dbd2aee3` |
+| 05 | `evidence/05-pii-redaction.png` | Email, phone, CCCD và thẻ đều được che |
+| 06 | `evidence/06-trace-list.png` | Project cá nhân và danh sách trace |
+| 07 | `evidence/07-trace-waterfall.png` | Cây root → retrieval + generation |
+| 08 | `evidence/08-trace-metadata.png` | Metadata cùng request với ảnh 04 |
+| 09 | `evidence/09-prompt-versions.png` | Prompt v1/v2 và labels |
+| 10a | `evidence/10a-prompt-promoted.jpg` | `production` được promote sang v2 |
+| 10b | `evidence/10b-prompt-rollback.jpg` | `production` rollback về v1 |
+| 11 | `evidence/11-dashboard-overview.png` | Dashboard đủ 6 panel |
+| 12 | `evidence/12-incident-metric.png` | Metric bất thường sau challenge |
+| 13 | `evidence/13-incident-log.png` | Incident log `req-dbd2aee3`, latency 2671 ms |
+| 14 | `evidence/14-incident-trace.png` | Incident trace cùng correlation ID, retrieval 2.50 s |
 
 ## 3. Kết quả kỹ thuật
 
@@ -89,6 +109,7 @@ Giữ đúng ba output text và năm ảnh dưới đây. Không tách thêm ả
 - [x] Kết quả và evidence thuộc commit SHA cuối.
 - [x] Tất cả ảnh/output mở được bằng đường dẫn tương đối.
 - [x] Có đúng 3 file text và 5 ảnh runtime theo hướng dẫn.
+- [x] Có đủ checklist evidence `01–14` theo trang CP4 trên VLearn.
 - [x] Incident evidence nối đúng metric → log → trace.
 - [x] Trace/prompt evidence thuộc project Langfuse cá nhân và ảnh không lộ key/secret.
 - [x] Repository chạy lại được theo README.
